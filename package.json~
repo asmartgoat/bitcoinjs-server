@@ -67,6 +67,6 @@
 
   "repository": {
     "type": "git",
-    "url": "git://github.com/asmartgoat/bitcoinjs-server.git"
+    "url": "git://github.com/bitcoinjs/bitcoinjs-server.git"
   }
 }
