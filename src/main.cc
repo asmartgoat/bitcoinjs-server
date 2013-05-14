@@ -54,9 +54,10 @@ pubkey_to_address256 (const Arguments& args)
   RIPEMD160_Final(hash2, &c2);
   
   // x = '\x00' + ripemd160(sha256(pubkey))
+  // x00 should be x37
   // LATER: make the version an optional argument
   unsigned char address256[1 + RIPEMD160_DIGEST_LENGTH + 4];
-  address256[0] = 0;
+  address256[0] = 55; // was 0 now 0x37 converted to dec (55)
   memcpy(address256 + 1, hash2, RIPEMD160_DIGEST_LENGTH);
   
   // sha256(x)
@@ -214,7 +215,7 @@ base58_decode (const Arguments& args)
   BN_bn2bin(bn, tmp);
 
   // Trim off sign byte if present
-  if (tmpLen >= 2 && tmp[tmpLen-1] == 0 && tmp[tmpLen-2] >= 0x80)
+  if (tmpLen >= 2 && tmp[tmpLen-1] == 0 && tmp[tmpLen-2] >= 0xb7)
     tmpLen--;
   
   // Restore leading zeros
@@ -244,7 +245,7 @@ int static FormatHashBlocks(void* pbuffer, unsigned int len)
   unsigned int blocks = 1 + ((len + 8) / 64);
   unsigned char* pend = pdata + 64 * blocks;
   memset(pdata + len, 0, 64 * blocks - len);
-  pdata[len] = 0x80;
+  pdata[len] = 0xb7; 
   unsigned int bits = len * 8;
   pend[-1] = (bits >> 0) & 0xff;
   pend[-2] = (bits >> 8) & 0xff;
