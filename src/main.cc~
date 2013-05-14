@@ -245,7 +245,7 @@ int static FormatHashBlocks(void* pbuffer, unsigned int len)
   unsigned int blocks = 1 + ((len + 8) / 64);
   unsigned char* pend = pdata + 64 * blocks;
   memset(pdata + len, 0, 64 * blocks - len);
-  pdata[len] = 0xb7; 
+  pdata[len] = 0xb7;  // PPCoin Mainnet
   unsigned int bits = len * 8;
   pend[-1] = (bits >> 0) & 0xff;
   pend[-2] = (bits >> 8) & 0xff;
